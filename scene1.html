@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <script src="https://aframe.io/releases/0.4.0/aframe.min.js"></script>
+  </head>
+  <body>
+    <a-scene>
+      <!-- Image Texture Assets -->
+      <a-assets>
+        <img id="boxTexture" src="./textures/stone.jpg" />
+        <img id="skyTexture" src="./textures/sky.jpg" />
+      </a-assets>
+      <!-- Shapes and other objects in scene -->
+      <a-box src="#boxTexture" rotation="0 45 45" scale="2 2 2" position="0 2 -5">
+        <a-sphere color="orange" position="1 0 0"></a-sphere>
+      </a-box>
+      <a-plane color="gray" rotation="-90 0 0" width="30" height="30" position="0 0 -5"></a-plane>
+      <a-sky src="#skyTexture"></a-sky>
+    </a-scene>
+  <body>
+</html>
