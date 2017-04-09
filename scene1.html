@@ -2,7 +2,33 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <script src="https://aframe.io/releases/0.4.0/aframe.min.js"></script>
+    <script src="https://aframe.io/releases/0.5.0/aframe.min.js"></script>
+    <script src="https://rawgit.com/mayognaise/aframe-html-shader/master/dist/aframe-html-shader.min.js"></script>
+    <script>
+      AFRAME.registerComponent('scale-on-mouseenter', {
+        schema: {
+          to: {default: '2.5 2.5 2.5'}
+        },
+        init: function () {
+          var data = this.data;
+          this.el.addEventListener('mouseenter', function () {
+            this.setAttribute('scale', data.to);
+          });
+        }
+      });
+
+      AFRAME.registerComponent('scale-on-mouseleave', {
+        schema: {
+          to: {default: '2 2 2'}
+        },
+        init: function() {
+          var data2 = this.data;
+          this.el.addEventListener('mouseleave', function() {
+            this.setAttribute('scale', data2.to);
+          });
+        }
+      });
+    </script>
   </head>
   <body>
     <a-scene>
@@ -10,13 +36,40 @@
       <a-assets>
         <img id="boxTexture" src="./textures/stone.jpg" />
         <img id="skyTexture" src="./textures/sky.jpg" />
+        <img id="floorTexture" src="./textures/floor.jpg" />
+        <video id="southPark" autoplay loop="true" src="./video/nope.mp4"></video>
       </a-assets>
+
       <!-- Shapes and other objects in scene -->
-      <a-box src="#boxTexture" rotation="0 45 45" scale="2 2 2" position="0 2 -5">
+      <a-box src="#floorTexture" rotation="0 45 45" scale="2 2 2" position="-5 2 -5" scale-on-mouseenter="to: 2.2 2.2 2.2" scale-on-mouseleave="to: 2 2 2">
+        <a-animation attribute="position" to="-5 2.2 -5" direction="alternate" dur="2000" repeat="indefinite"></a-animation>
+        <a-animation attribute="rotation" begin="click" dur="2000" to="360 405 45"></a-animation>
         <a-sphere color="orange" position="1 0 0"></a-sphere>
       </a-box>
-      <a-plane color="gray" rotation="-90 0 0" width="30" height="30" position="0 0 -5"></a-plane>
+
+      <a-plane src="#boxTexture" color="gray" rotation="-90 0 0" width="30" height="30" position="0 0 -5" repeat="10 10"></a-plane>
+
+      <a-video src="#southPark" width="16" height="9" position="2 5 -20"></a-video>
+
+      <a-text value="Hello, A-Frame!" color="#BBB" position="-0.9 0.2 -3" scale="1.5 1.5 1.5"></a-text>
+
+      <!-- Sky -->
       <a-sky src="#skyTexture"></a-sky>
+
+      <!-- Lighting -->
+      <a-light type="ambient" color="#445451"></a-light>
+      <a-light type="point" intensity="2" position="2 4 4"></a-light>
+
+      <!-- Audio -->
+
+      <!-- Camera -->
+      <a-camera>
+        <a-cursor material="color: red; shader: flat">
+          <a-animation attribute="material.color" begin="click" from="red" to="green" fill="backwards"></a-animation>
+        </a-cursor>
+      </a-camera>
+
     </a-scene>
+    <div style="position:relative;height:0;padding-bottom:56.25%"><iframe src="https://www.youtube.com/embed/-AfjBifqK_E?ecver=2" width="640" height="360" frameborder="0" style="position:absolute;width:100%;height:100%;left:0" allowfullscreen></iframe></div>
   <body>
 </html>
